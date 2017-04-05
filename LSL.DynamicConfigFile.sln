@@ -1,0 +1,75 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Salford.Owin.Extras", "Salford.Owin.Extras\Salford.Owin.Extras.csproj", "{676DCE7E-0C3B-462A-91AA-92090FF0F5CE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Salford.WebApi.Extras", "Salford.WebApi.Extras\Salford.WebApi.Extras.csproj", "{878AD2AA-399B-4DC7-AE9E-6B8FFE346835}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Salford.Owin.Extras.Tests", "Salford.Owin.Extras.Tests\Salford.Owin.Extras.Tests.csproj", "{0B35693A-0EA8-45C0-AFA0-95E14A3282DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Salford.WebApi.Extras.Tests", "Salford.WebApi.Extras.Tests\Salford.WebApi.Extras.Tests.csproj", "{0A1C1FF1-33EA-4E65-A091-0BE5515DB396}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Salford.VariableReplacer", "Salford.VariableReplacer\Salford.VariableReplacer.csproj", "{E2F9C96E-10D8-4E90-A7B0-BDEC7138A72A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5E27FEC8-DF13-45DE-A76E-5CFF8E34257F}"
+	ProjectSection(SolutionItems) = preProject
+		readme.md = readme.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Salford.VariableReplacer.Tests", "Salford.VariableReplacer.Tests\Salford.VariableReplacer.Tests.csproj", "{D32A8211-33BD-4DB9-B0D9-DDD62604D370}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSL.DynamicConfigFile", "LSL.DynamicConfigFile\LSL.DynamicConfigFile.csproj", "{F0CFE49B-21C2-43EC-9B9B-11ACE2DD10A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSL.DynamicConfigFile.Tests", "LSL.DynamicConfigFile.Tests\LSL.DynamicConfigFile.Tests.csproj", "{8AC4954C-B27C-492C-82C8-7DF4B6005A2F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Salford.FileSystem.Extras.Tests", "Salford.FileSystem.Extras.Tests\Salford.FileSystem.Extras.Tests.csproj", "{B99E91E9-94CE-4E8D-A440-45E30D21A365}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{676DCE7E-0C3B-462A-91AA-92090FF0F5CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{676DCE7E-0C3B-462A-91AA-92090FF0F5CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{676DCE7E-0C3B-462A-91AA-92090FF0F5CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{676DCE7E-0C3B-462A-91AA-92090FF0F5CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{878AD2AA-399B-4DC7-AE9E-6B8FFE346835}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{878AD2AA-399B-4DC7-AE9E-6B8FFE346835}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{878AD2AA-399B-4DC7-AE9E-6B8FFE346835}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{878AD2AA-399B-4DC7-AE9E-6B8FFE346835}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B35693A-0EA8-45C0-AFA0-95E14A3282DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B35693A-0EA8-45C0-AFA0-95E14A3282DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B35693A-0EA8-45C0-AFA0-95E14A3282DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B35693A-0EA8-45C0-AFA0-95E14A3282DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A1C1FF1-33EA-4E65-A091-0BE5515DB396}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A1C1FF1-33EA-4E65-A091-0BE5515DB396}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A1C1FF1-33EA-4E65-A091-0BE5515DB396}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A1C1FF1-33EA-4E65-A091-0BE5515DB396}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2F9C96E-10D8-4E90-A7B0-BDEC7138A72A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2F9C96E-10D8-4E90-A7B0-BDEC7138A72A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2F9C96E-10D8-4E90-A7B0-BDEC7138A72A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2F9C96E-10D8-4E90-A7B0-BDEC7138A72A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D32A8211-33BD-4DB9-B0D9-DDD62604D370}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D32A8211-33BD-4DB9-B0D9-DDD62604D370}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D32A8211-33BD-4DB9-B0D9-DDD62604D370}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D32A8211-33BD-4DB9-B0D9-DDD62604D370}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0CFE49B-21C2-43EC-9B9B-11ACE2DD10A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0CFE49B-21C2-43EC-9B9B-11ACE2DD10A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0CFE49B-21C2-43EC-9B9B-11ACE2DD10A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0CFE49B-21C2-43EC-9B9B-11ACE2DD10A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AC4954C-B27C-492C-82C8-7DF4B6005A2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AC4954C-B27C-492C-82C8-7DF4B6005A2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AC4954C-B27C-492C-82C8-7DF4B6005A2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AC4954C-B27C-492C-82C8-7DF4B6005A2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B99E91E9-94CE-4E8D-A440-45E30D21A365}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B99E91E9-94CE-4E8D-A440-45E30D21A365}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B99E91E9-94CE-4E8D-A440-45E30D21A365}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B99E91E9-94CE-4E8D-A440-45E30D21A365}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

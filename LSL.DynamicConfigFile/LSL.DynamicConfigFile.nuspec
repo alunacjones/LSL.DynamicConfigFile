@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>LSL.DynamicConfigFile</id>
+    <version>$version$</version>
+    <title>LSL.DynamicConfigFile</title>
+    <authors>Salford Uni</authors>
+    <owners>Salford Uni</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>LSL.DynamicConfigFile</description>
+    <copyright>Copyright 2016</copyright>
+    <projectUrl>https://stash.LSL.ac.uk:8447/projects/SAL/repos/LSL.owin.extras/browse</projectUrl>
+    <tags></tags>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.Configuration" targetFramework="net452"/>
+      <frameworkAssembly assemblyName="System.Xml.Linq" targetFramework="net452"/>
+      <frameworkAssembly assemblyName="System.Xml" targetFramework="net452"/>
+    </frameworkAssemblies>
+  </metadata>
+  <files>
+    <file src="bin\release\LSL.DynamicConfigFile.dll" target="lib\net452\" />
+  </files>
+</package>
