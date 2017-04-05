@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Configuration;
-using System.Linq;
-using System.Reflection;
 
 namespace LSL.DynamicConfigFile
 {
@@ -34,6 +32,7 @@ namespace LSL.DynamicConfigFile
             {                
             }
 
+            // ReSharper disable once UnusedMember.Local
             public void DisposeManaged()
             {
                 AppDomain.SetData(ConfigFileKey, _originalAppConfig);
@@ -44,20 +43,15 @@ namespace LSL.DynamicConfigFile
             {
                 var configurationManager = typeof(ConfigurationManager);
 
-                SetStaticValue(configurationManager, "s_initState", 0);
-                SetStaticValue(configurationManager, "s_configSystem", null);                
+                configurationManager.SetStatic("s_initState", 0)
+                    .SetStatic("s_configSystem", null);
 
-                SetStaticValue(configurationManager
+                configurationManager
                     .Assembly
-                    .GetType("System.Configuration.ClientConfigPaths"),
-                    "s_current",
-                    null);
-            }
-
-            private static void SetStaticValue(IReflect type, string fieldName, object value)
-            {
-                type.GetField(fieldName, BindingFlags.Static | BindingFlags.NonPublic) 
-                    .SetValue(null, value);
+                    .GetType("System.Configuration.ClientConfigPaths")
+                    .SetStatic(
+                        "s_current",
+                        null);
             }
 
             public AppDomain AppDomain { get; private set; }

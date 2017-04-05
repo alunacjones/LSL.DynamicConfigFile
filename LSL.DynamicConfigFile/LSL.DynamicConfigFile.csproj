@@ -55,6 +55,7 @@
     <Compile Include="IDynamicConfigFileFactory.cs" />
     <Compile Include="IDynamicConfigFileFactoryExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReflectExtensions.cs" />
     <Compile Include="Xml\ConfigFileXElementExtensions.cs" />
     <Compile Include="Xml\XElementExtensions.cs" />
   </ItemGroup>

@@ -1,13 +1,16 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/rh7je3wmpyojcgj6?svg=true)](https://ci.appveyor.com/project/alunacjones/lsl-dynamicconfigfile)
 
-# Summary
-
-A package to provide a disposable dynamic configuration file.
-
-<!-- MarkdownTOC -->
+<!-- MarkdownTOC depth="10" -->
 
 - LSL.DynamicConfigFile package
     - IDynamicConfigFileFactory
+        - Extension methods for quicker creation
+        - CreateFromStringContent extension method
+        - CreateFromExistingFileAsXDocument Extension Method
+            - XElement helper methods
+                - SetAppSettings
+                - SetConnectionStrings
+                - SetKeyValueElement
 
 <!-- /MarkdownTOC -->
 
@@ -15,9 +18,9 @@ A package to provide a disposable dynamic configuration file.
 
 ## IDynamicConfigFileFactory
 
-The default implementation provides an instance that can be used in non-IOC applications.
-
 The interface defines a single entry point that accepts an Action that will be given a configuration object for setting up the dynamic configuration file:
+
+The default implementation of the factory is the `DynamicConfigFileFactory` class.
 
 ```csharp
 public interface IDynamicConfigFileFactory
@@ -41,8 +44,6 @@ using (var new DynamicConfigFileFactory()
 //Outside the using block we are back to the original config file for the appDomain
 ```
 
-
-<a name="extension-methods-for-quicker-creation"></a>
 ### Extension methods for quicker creation
 All the following examples assume a configuration file of:
 
@@ -116,7 +117,6 @@ using (var dcf = new DynamicConfigFileFactory()
     .Create(newConfigFile)) {} /* Defaults to using AppDomain.CurrentDomain */
 ```
 
-<a name="createfromstringcontent-extension-method"></a>
 ### CreateFromStringContent extension method
 
 ```csharp
@@ -167,7 +167,6 @@ using (var dcf = new DynamicConfigFileFactory    ()
     }
 ```
 
-<a name="createfromexistingfile-extension-method"></a>
 ### CreateFromExistingFileAsXDocument Extension Method
 
 ```csharp
@@ -199,12 +198,10 @@ using (var dcf = new DynamicConfigFileFactory()
     }
 ```
 
-<a name="xelement-helper-methods"></a>
 #### XElement helper methods
 
 Since it's a bit cumbersome to directly manipulate the XDocument there are a number of helper methods to ease the pain.
 
-<a name="setappsettings"></a>
 ##### SetAppSettings
 
 ```csharp
@@ -229,7 +226,6 @@ using (var dcf = new DynamicConfigFileFactory()
     }
 ```
 
-<a name="setconnectionstrings"></a>
 ##### SetConnectionStrings
 
 ```csharp
@@ -254,7 +250,6 @@ using (var dcf = new DynamicConfigFileFactory()
     }
 ```
 
-<a name="setkeyvalueelement"></a>
 ##### SetKeyValueElement
 
 Since there are a number of setions that define elements that only have a key and value attribute, this is provided to ease the pain with those sections.
