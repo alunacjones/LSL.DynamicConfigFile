@@ -4,8 +4,8 @@
     <id>LSL.DynamicConfigFile</id>
     <version>$version$</version>
     <title>LSL.DynamicConfigFile</title>
-    <authors>Salford Uni</authors>
-    <owners>Salford Uni</owners>
+    <authors>LogicalShiftLeft</authors>
+    <owners>LogicalShiftLeft</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>LSL.DynamicConfigFile</description>
     <copyright>Copyright 2016</copyright>
