@@ -9,7 +9,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>LSL.DynamicConfigFile</description>
     <copyright>Copyright 2016</copyright>
-    <projectUrl>https://stash.LSL.ac.uk:8447/projects/SAL/repos/LSL.owin.extras/browse</projectUrl>
+    <projectUrl>https://github.com/alunacjones/LSL.DynamicConfigFile</projectUrl>
     <tags></tags>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System.Configuration" targetFramework="net452"/>
