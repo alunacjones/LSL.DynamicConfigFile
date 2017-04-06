@@ -2,15 +2,15 @@
 
 <!-- MarkdownTOC -->
 
-- LSL.DynamicConfigFile package
-    - IDynamicConfigFileFactory
-        - Extension methods for quicker creation
-        - CreateFromStringContent extension method
-        - CreateFromExistingFileAsXDocument Extension Method
-            - XElement helper methods
-                - SetAppSettings
-                - SetConnectionStrings
-                - SetKeyValueElement
+- [LSL.DynamicConfigFile package](#lsldynamicconfigfile-package)
+    - [IDynamicConfigFileFactory](#idynamicconfigfilefactory)
+        - [Extension methods for quicker creation](#extension-methods-for-quicker-creation)
+        - [CreateFromStringContent extension method](#createfromstringcontent-extension-method)
+        - [CreateFromExistingFileAsXDocument Extension Method](#createfromexistingfileasxdocument-extension-method)
+            - [XElement helper methods](#xelement-helper-methods)
+                - [SetAppSettings](#setappsettings)
+                - [SetConnectionStrings](#setconnectionstrings)
+                - [SetKeyValueElement](#setkeyvalueelement)
 
 <!-- /MarkdownTOC -->
 
