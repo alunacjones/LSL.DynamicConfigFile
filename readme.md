@@ -147,7 +147,7 @@ using (var dcf = new DynamicConfigFileFactory()
         */
 } 
 
-using (var dcf = new DynamicConfigFileFactory    ()
+using (var dcf = new DynamicConfigFileFactory()
     .CreateFromStringContent(@"
         <configuration>
             <appSettings>
@@ -283,9 +283,8 @@ using (new DynamicConfigFileFactory()
                 { "quartz.threadPool.threadPriority", "Normal" },
                 { "quartz.jobStore.misfireThreshold", "60000" },
                 { "quartz.jobStore.type", "Quartz.Simpl.RAMJobStore, Quartz" },
-                { "quartz.plugin.xml.type", "ConsoleSchedulerService.Quartz.JobInitializationPluginWithVariableReplacement, ConsoleSchedulerService" },
-                { "quartz.plugin.xml.overwriteExistingJobs", "true" },
-                { "quartz.plugin.xml.fileNames", quartzFilePath }
+                { "quartz.plugin.xml.type", "ConsoleSchedulerService.Quartz.Plugin.Xml.JobInitializationPlugin, Quartz, ConsoleSchedulerService" },
+                { "quartz.plugin.xml.overwriteExistingJobs", "true" Quartz.Plugin.Xml.JobInitializationPlugin, Quartz                { "quartz.plugin.xml.fileNames", quartzFilePath }
             }.ForEach(kvp => quartzNode.SetKeyValueElement(kvp.Key, kvp.Value));
     },
     cfg => cfg.WithConfigurationFileOf(Path.GetTempFileName())))
