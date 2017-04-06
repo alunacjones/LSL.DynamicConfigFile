@@ -1,0 +1,21 @@
+version: 1.0.{build}
+configuration: Release
+assembly_info:
+  patch: true
+  file: '**\AssemblyInfo.*'
+  assembly_version: '{version}'
+  assembly_file_version: '{version}'
+  assembly_informational_version: '{version}'
+before_build:
+- cmd: nuget restore
+build:
+  publish_nuget: true
+  publish_nuget_symbols: true
+  verbosity: minimal
+deploy:
+- provider: NuGet
+  api_key:
+    secure: X0zHnxwTrEr5k44myuGeb0S3BX3QAH4T63vLJoYvCZ4BVYmdPD7+XkE/hY8kVAAe
+skip_commits:
+  files:
+    - '**/*.md'    
