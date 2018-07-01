@@ -10,7 +10,7 @@
     <description>LSL.DynamicConfigFile</description>
     <copyright>Copyright 2016</copyright>
     <projectUrl>https://github.com/alunacjones/LSL.DynamicConfigFile</projectUrl>
-    <tags></tags>
+    <tags>dynamic config file</tags>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System.Configuration" targetFramework="net452"/>
       <frameworkAssembly assemblyName="System.Xml.Linq" targetFramework="net452"/>
