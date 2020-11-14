@@ -15,7 +15,7 @@ build:
 deploy:
 - provider: NuGet
   api_key:
-    secure: C/c/nu4tlPQIP86piX8+67QPXfWyTBI7BzNKbs1uOcXADej9mOkNMBRiU6wyHZpy
+    secure: KvCsSP9GBIWOq9YWTpUK2iqjXeyMd/gv20zDXVHA5et7TR3nMHZKr0hcfsY5wt1N
 skip_commits:
   files:
     - '**/*.md'    
