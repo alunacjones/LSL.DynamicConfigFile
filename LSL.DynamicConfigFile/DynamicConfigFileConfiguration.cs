@@ -2,7 +2,7 @@
 
 namespace LSL.DynamicConfigFile
 {
-    public class DynamicConfigFileConfiguration : IDynamicConfigFileConfiguration
+    internal class DynamicConfigFileConfiguration : IDynamicConfigFileConfiguration
     {
         public AppDomain AppDomain { get; private set; }
         public string ConfigurationFileName { get; private set; }

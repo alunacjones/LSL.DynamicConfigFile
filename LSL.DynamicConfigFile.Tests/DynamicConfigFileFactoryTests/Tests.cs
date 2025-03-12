@@ -3,34 +3,31 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Configuration;
 using System.IO;
-using System.Linq;
-using System.Xml.Linq;
-using System.Xml.XPath;
 using FluentAssertions;
 using NUnit.Framework;
 using LSL.DynamicConfigFile.Xml;
+using System.Xml.Linq;
+using FluentAssertions.Execution;
 
 namespace LSL.DynamicConfigFile.Tests.DynamicConfigFileFactoryTests
 {    
     public class Tests
     {
-        private static DynamicConfigFileFactory BuildSut()
-        {
-            return new DynamicConfigFileFactory();
-        }
+        private static DynamicConfigFileFactory BuildSut() => new DynamicConfigFileFactory();
 
-        [Test]
-        public void DynamicConfigFileFactory_WhenSwitchingConfigFiles_ItShouldUseTheNewFile()
+        [TestCase("Test.config", "dynamic.key.value")]
+        [TestCase("Empty.config", null)]
+        public void DynamicConfigFileFactory_WhenSwitchingConfigFiles_ItShouldUseTheNewFile(string file, string expectedDynamicKeyValue)
         {
             AppSetting("original.key").Should().Be("original.key.value");
             AppSetting("dynamic.key").Should().BeNull();
-            var newConfigFile = Path.Combine(Environment.CurrentDirectory, @"TestConfigs\Test.config");
+            var newConfigFile = Path.Combine(AppContext.BaseDirectory, $@"TestConfigs\{file}");
 
             using (var dcf = BuildSut()
                 .Create(newConfigFile))
             {
                 AppSetting("original.key").Should().BeNull();
-                AppSetting("dynamic.key").Should().Be("dynamic.key.value");
+                AppSetting("dynamic.key").Should().Be(expectedDynamicKeyValue);
 
                 dcf.AppDomain.Should().Be(AppDomain.CurrentDomain);
                 dcf.ConfigFile.Should().Be(newConfigFile);
@@ -45,7 +42,7 @@ namespace LSL.DynamicConfigFile.Tests.DynamicConfigFileFactoryTests
         {
             AppSetting("original.key").Should().Be("original.key.value");
             AppSetting("dynamic.key").Should().BeNull();
-            var stringContent = File.ReadAllText(Path.Combine(Environment.CurrentDirectory, @"TestConfigs\Test.config"));
+            var stringContent = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, @"TestConfigs\Test.config"));
             var newConfigFile = Path.GetTempFileName();
             File.WriteAllText(newConfigFile, stringContent);
 
@@ -104,15 +101,88 @@ namespace LSL.DynamicConfigFile.Tests.DynamicConfigFileFactoryTests
             ConnectionString("DB2").Should().Be("");
         }
 
-        [Test]
-        public void DynamicConfigFileFactory_WhenGettingAppSettings_ItShouldReturnTheExpectedResult()
+        [TestCase("Test.config")]
+        [TestCase("Empty.config")]
+        public void DynamicConfigFileFactory_WhenInitialisingFromAFile_ItShouldUseTheNewFile(string file)
         {
-            var xml = XDocument.Load(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile);
-            var defaultSettings = xml.GetAppSettings();
-            var appSettings = defaultSettings.XPathSelectElements("*[@key and @value]");
+            AppSetting("original.key").Should().Be("original.key.value");
+            AppSetting("dynamic.key").Should().BeNull();
+            ConnectionString("DB1").Should().Be("DB1.connection.string");
+            ConnectionString("DB2").Should().Be("");
+            var newConfigFile = Path.GetTempFileName();
 
-            appSettings.Count().Should().Be(1);
-            appSettings.ElementAt(0).ToString().Should().Be("<add key=\"original.key\" value=\"original.key.value\" />");
+            using (var dcf = BuildSut()
+                .CreateFromFileAsXDocument(
+                    Path.Combine(AppContext.BaseDirectory, $@"TestConfigs\{file}"),
+                    xml =>
+                    {
+                        xml
+                            .SetAppSettings(new Dictionary<string, string>
+                            {
+                                {"dynamic.key", "dynamic.key.value"},
+                                {"original.key", "original.key.updated" }
+                            })
+                            .SetConnectionStrings(new Dictionary<string, string>
+                            {
+                                {"DB2", "DB2.connection.string"}
+                            });
+                    },
+                    cfg => cfg.WithConfigurationFileOf(newConfigFile)))
+            {
+                AppSetting("original.key").Should().Be("original.key.updated");
+                AppSetting("dynamic.key").Should().Be("dynamic.key.value");
+                ConnectionString("DB1").Should().Be("");
+                ConnectionString("DB2").Should().Be("DB2.connection.string");
+
+                dcf.AppDomain.Should().Be(AppDomain.CurrentDomain);
+                dcf.ConfigFile.Should().Be(newConfigFile);
+            }
+
+            AppSetting("original.key").Should().Be("original.key.value");
+            AppSetting("dynamic.key").Should().BeNull();
+            ConnectionString("DB1").Should().Be("DB1.connection.string");
+            ConnectionString("DB2").Should().Be("");
+        }
+
+        [Test]
+        public void DynamicConfigFileFactory_WhenInitialisingFromAnXDocument_ItShouldUseTheNewFile()
+        {
+            AppSetting("original.key").Should().Be("original.key.value");
+            AppSetting("dynamic.key").Should().BeNull();
+            ConnectionString("DB1").Should().Be("DB1.connection.string");
+            ConnectionString("DB2").Should().Be("");
+            var newConfigFile = Path.GetTempFileName();
+
+            using (var dcf = BuildSut()
+                .CreateFromXDocument(
+                    xml =>
+                    {
+                        xml
+                            .SetAppSettings(new Dictionary<string, string>
+                            {
+                                {"dynamic.key", "dynamic.key.value"},
+                                {"original.key", "original.key.updated" }
+                            })
+                            .SetConnectionStrings(new Dictionary<string, string>
+                            {
+                                {"DB2", "DB2.connection.string"}
+                            });
+                    },
+                    cfg => cfg.WithConfigurationFileOf(newConfigFile)))
+            {
+                AppSetting("original.key").Should().Be("original.key.updated");
+                AppSetting("dynamic.key").Should().Be("dynamic.key.value");
+                ConnectionString("DB1").Should().Be("");
+                ConnectionString("DB2").Should().Be("DB2.connection.string");
+
+                dcf.AppDomain.Should().Be(AppDomain.CurrentDomain);
+                dcf.ConfigFile.Should().Be(newConfigFile);
+            }
+
+            AppSetting("original.key").Should().Be("original.key.value");
+            AppSetting("dynamic.key").Should().BeNull();
+            ConnectionString("DB1").Should().Be("DB1.connection.string");
+            ConnectionString("DB2").Should().Be("");
         }
 
         [Test]
@@ -146,39 +216,52 @@ namespace LSL.DynamicConfigFile.Tests.DynamicConfigFileFactoryTests
         }
 
         [Test]
-        public void DynamicConfigFileFactory_WhenUpdateingAnExistingFilesText_ItShouldUseTheNewFile()
+        public void AddElement_GivenAnElementAsTheSource_ItShouldAddTheNewElement()
         {
-            AppSetting("original.key").Should().Be("original.key.value");
+            var doc = XDocument.Parse("<configuration/>");
+            var app = doc.GetAppSettings();
+            app.AddElement(new XElement("Als"));
+            app.Element("Als").Should().NotBeNull();
+        }
 
-            var newConfigFile = Path.GetTempFileName();
+        [Test]
+        public void AddElement_GivenAnXDocumentAsTheSource_ItShouldAddTheNewElement()
+        {
+            var doc = XDocument.Parse("<configuration/>");
+            doc.AddElement(new XElement("Als"));
+            doc.Root.Element("Als").Should().NotBeNull();
+        }
 
-            using (var dcf = BuildSut()
-                .CreateFromExistingFileAsString(source => source.Replace("original.key", "different-original.key"), 
-                cfg => cfg.WithConfigurationFileOf(newConfigFile)))
+        [Test]
+        public void AddElement_GivenAnInvalidSourceSource_ItShouldThrowAnException()
+        {
+            void Test(XNode source) => new Action(() => source.AddElement(new XElement("no-care"))).Should().Throw<ArgumentException>();
+
+            using (var scope = new AssertionScope())
             {
-                AppSetting("original.key").Should().BeNull();
-                AppSetting("different-original.key").Should().Be("different-original.key.value");
-
-                dcf.AppDomain.Should().Be(AppDomain.CurrentDomain);
-                dcf.ConfigFile.Should().Be(newConfigFile);
+                Test(new XText("value"));
+                Test(new XComment("value"));
+                Test(new XProcessingInstruction("target", "value"));
+                Test(new XDocumentType("target", "value", "2", "3"));
             }
+        }          
 
-            AppSetting("original.key").Should().Be("original.key.value");
-        }
-
-        private static string AppSetting(string appSettingKey)
+        [Test]
+        public void GetAppSettings_GivenADocumentWithTheWrongRoot_ItShouldThrowAnException()
         {
-            return ConfigurationManager.AppSettings[appSettingKey];
+            new Action(() => BuildSut().CreateFromFileAsXDocument(
+                Path.Combine(AppContext.BaseDirectory, "TestConfigs/WrongRoot.config"),
+                xml => xml.SetAppSettings(new Dictionary<string, string> { ["no-care"] = "meh" })                
+            )).Should()
+            .Throw<ArgumentException>()
+            .WithMessage("Provided node must have a root of 'configuration'");
         }
+        private static string AppSetting(string appSettingKey) => ConfigurationManager.AppSettings[appSettingKey];
 
-        private static string SectionValue(string nameValueSectionName, string key)
-        {
-            return ((NameValueCollection)ConfigurationManager.GetSection(nameValueSectionName))[key];
-        }
+        private static string SectionValue(string nameValueSectionName, string key) => 
+            ((NameValueCollection)ConfigurationManager.GetSection(nameValueSectionName))[key];
 
-        private static string ConnectionString(string connectionStringName)
-        {
-            return (ConfigurationManager.ConnectionStrings[connectionStringName] ?? new ConnectionStringSettings()).ConnectionString;
-        }
+        private static string ConnectionString(string connectionStringName) => 
+            (ConfigurationManager.ConnectionStrings[connectionStringName] ?? new ConnectionStringSettings()).ConnectionString;
     }
 }

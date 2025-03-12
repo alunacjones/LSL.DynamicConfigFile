@@ -3,8 +3,10 @@ using System.Configuration;
 
 namespace LSL.DynamicConfigFile
 {
+    /// <inheritdoc/>
     public class DynamicConfigFileFactory : IDynamicConfigFileFactory
     {
+        /// <inheritdoc/>
         public IDynamicConfigFile Create(Action<IDynamicConfigFileConfiguration> configurator)
         {
             var cfg = new DynamicConfigFileConfiguration();
@@ -15,27 +17,17 @@ namespace LSL.DynamicConfigFile
 
         private class DynamicConfigFile : IDynamicConfigFile
         {
-            private const string ConfigFileKey = "APP_CONFIG_FILE";
+            private const string _configFileKey = "APP_CONFIG_FILE";
 
             private readonly object _originalAppConfig;
+            private bool _disposedValue;
 
             public DynamicConfigFile(AppDomain appDomain, string configFile)
             {
-                _originalAppConfig = appDomain.GetData(ConfigFileKey).ToString();
+                _originalAppConfig = appDomain.GetData(_configFileKey).ToString();
                 ConfigFile = configFile;
                 AppDomain = appDomain;
-                AppDomain.SetData(ConfigFileKey, configFile);
-                ResetConfiguration();
-            }
-
-            public void Dispose()
-            {                
-            }
-
-            // ReSharper disable once UnusedMember.Local
-            public void DisposeManaged()
-            {
-                AppDomain.SetData(ConfigFileKey, _originalAppConfig);
+                AppDomain.SetData(_configFileKey, configFile);
                 ResetConfiguration();
             }
 
@@ -56,6 +48,27 @@ namespace LSL.DynamicConfigFile
 
             public AppDomain AppDomain { get; private set; }
             public string ConfigFile { get; private set; }
+
+            protected virtual void Dispose(bool disposing)
+            {
+                if (!_disposedValue)
+                {
+                    if (disposing)
+                    {
+                        AppDomain.SetData(_configFileKey, _originalAppConfig);
+                        ResetConfiguration();
+                    }
+
+                    _disposedValue = true;
+                }
+            }
+
+            public void Dispose()
+            {
+                // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+                Dispose(disposing: true);
+                GC.SuppressFinalize(this);
+            }
         }
     }
 }

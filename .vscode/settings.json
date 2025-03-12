@@ -1,0 +1,14 @@
+{
+  "run-command.commands": [
+    {
+      "command": "get-childitem -Recurse -Force -Filter 'TestResults' | Remove-Item -Recurse -Force;$out = (join-path $env:Temp 'Coverage'); dotnet test --collect:\"XPlat Code Coverage\" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura;reportgenerator -reports:**/TestResults/**/*.xml -targetdir:$out; if ($LASTEXITCODE -eq 0) { invoke-item \"$out\\index.html\" }",
+      "name": "Cover Tests",
+      "path": "${workspaceFolder}"
+    },
+    {
+        "command": "dotnet pack LSL.DynamicConfigFile",
+        "name": "Pack locally",
+        "path": "${workspaceFolder}"
+      },    
+  ]
+}

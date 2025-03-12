@@ -1,4 +1,6 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/rh7je3wmpyojcgj6?svg=true)](https://ci.appveyor.com/project/alunacjones/lsl-dynamicconfigfile)
+[![Build status](https://img.shields.io/appveyor/ci/alunacjones/lsl-dynamicconfigfile.svg)](https://ci.appveyor.com/project/alunacjones/lsl-dynamicconfigfile)
+[![Coveralls branch](https://img.shields.io/coverallsCoverage/github/alunacjones/LSL.DynamicConfigFile)](https://coveralls.io/github/alunacjones/LSL.DynamicConfigFile)
+[![NuGet](https://img.shields.io/nuget/v/LSL.DynamicConfigFile.svg)](https://www.nuget.org/packages/LSL.DynamicConfigFile/)
 
 <!-- MarkdownTOC -->
 
@@ -164,7 +166,7 @@ using (var dcf = new DynamicConfigFileFactory()
             The default AppDomain has its configuration changed to a new file 
             that is provided by The Path.GetTempFileName() function.
         */        
-    }
+    })
 ```
 
 ### CreateFromExistingFileAsXDocument Extension Method
@@ -285,7 +287,8 @@ using (new DynamicConfigFileFactory()
                 { "quartz.jobStore.type", "Quartz.Simpl.RAMJobStore, Quartz" },
                 { "quartz.plugin.xml.type", "ConsoleSchedulerService.Quartz.Plugin.Xml.JobInitializationPlugin, Quartz, ConsoleSchedulerService" },
                 { "quartz.plugin.xml.overwriteExistingJobs", "true" Quartz.Plugin.Xml.JobInitializationPlugin, Quartz                { "quartz.plugin.xml.fileNames", quartzFilePath }
-            }.ForEach(kvp => quartzNode.SetKeyValueElement(kvp.Key, kvp.Value));
+                }.ForEach(kvp => quartzNode.SetKeyValueElement(kvp.Key, kvp.Value));
+            }        
     },
     cfg => cfg.WithConfigurationFileOf(Path.GetTempFileName())))
 {

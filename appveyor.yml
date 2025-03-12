@@ -1,21 +1,42 @@
 version: 1.0.{build}
+image: Visual Studio 2022
 configuration: Release
-assembly_info:
+environment:
+  COVERALLS_REPO_TOKEN:
+    secure: 5Kmg1cIaaY7iL5ii1Iz2TYLZ+KDMZVNk9ZVFWfl3e9NzqR0huQY+KIMVl/CsLu4P
+  keyfile_salt:
+    secure: 7MQg/ApVF+pQ6BH9mIygmZZXYylcKrYU0MDPVhFKq/3lwqrD07yBFDjWnX90WEFDMVPrMKuC2ljPCTsgwlhtnQ==
+  keyfile_secret:
+    secure: 8dwhU0D9ziN3eO21jNuk7XFRU9SpDv8laszr+gCTiwxJx/XmaHGtLn8meL5BIZFV
+install:
+  - ps: iex ((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/appveyor/secure-file/master/install.ps1'))
+  - cmd: appveyor-tools\secure-file -decrypt LSL.DynamicConfigFile\LSL.snk.enc -secret %keyfile_secret% -salt %keyfile_salt%
+  - sh: ./appveyor-tools/secure-file -decrypt LSL.DynamicConfigFile/LSL.snk.enc -secret $keyfile_secret -salt $keyfile_salt    
+dotnet_csproj:
   patch: true
-  file: '**\AssemblyInfo.*'
+  file: '**\*.csproj'
+  version: '{version}'
+  package_version: '{version}'
   assembly_version: '{version}'
-  assembly_file_version: '{version}'
-  assembly_informational_version: '{version}'
+  file_version: '{version}'
+  informational_version: '{version}'
 before_build:
-- cmd: nuget restore
-build:
-  publish_nuget: true
-  publish_nuget_symbols: true
-  verbosity: minimal
+- dotnet tool install coveralls.net
+build_script:
+- cmd: >-
+    dotnet build -c Release
+
+    dotnet pack -c Release
+test_script:
+- cmd: dotnet test -c Release --no-build --no-restore --test-adapter-path:. --logger:Appveyor /p:CollectCoverage=true /p:CoverletOutputFormat="opencover" /p:CoverletOutput=../lcov
+- cmd: dotnet csmacnz.Coveralls --opencover -i .\lcov.opencover.xml --useRelativePaths
+artifacts:
+- path: '**\*.nupkg'
 deploy:
 - provider: NuGet
-  api_key:
-    secure: KvCsSP9GBIWOq9YWTpUK2iqjXeyMd/gv20zDXVHA5et7TR3nMHZKr0hcfsY5wt1N
+  on:
+    branch: master
+  api_key: $(MY_NUGET_API_KEY)
 skip_commits:
   files:
-    - '**/*.md'    
+    - '**/*.md'     
